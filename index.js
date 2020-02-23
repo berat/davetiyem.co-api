@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 
-const db = require('./config')
+const db = require('./querys/auth')
 
 
 const app = express()
@@ -14,11 +14,12 @@ app.use(
     })
 )
 
-app.get('/users', db.getUsers)
+app.get('/v1/auth/uyeCek', db.uyeCek)
+app.post('/v1/auth/kayitOl', db.kayitOl)
 
 
 app.get('/', (request, response) => {
-    response.json({ info: 'Node.js, Express, and Postgres API' })
+    response.json({ info: 'Çalışıyor çalışmakta olan.' })
 })
 app.listen(port, () => {
     console.log(`App running on port ${port}.`)
