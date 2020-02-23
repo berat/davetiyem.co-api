@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 
 const db = require('./querys/auth')
+const config = require('./config')
 
 
 const app = express()
@@ -14,9 +15,12 @@ app.use(
     })
 )
 
-app.get('/v1/auth/uyeCek', db.uyeCek)
-app.post('/v1/auth/kayitOl', db.kayitOl)
-app.post('/v1/auth/girisYap', db.girisYap)
+app.get(config.version+'uyeCek', db.uyeCek)
+app.post(config.version+'kayitOl', db.kayitOl)
+app.post(config.version+'girisYap', db.girisYap)
+
+app.put(config.version+'sifremi-unuttum', db.sifremiSifirla)
+app.put(config.version+'sifremi-sifirla/:hash', db.sifremiDegistir)
 
 
 app.get('/', (request, response) => {

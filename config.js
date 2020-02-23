@@ -20,9 +20,11 @@ module.exports = {
   mail: {
     host: 'smtp.yandex.com',
     port: 465,
+    secure: true,
     auth: {
        user: 'destek@davetiyem.co',
        pass: 'B2bo4-B2bo4'
     }
   },
+  version: '/v1/auth/'
 }
