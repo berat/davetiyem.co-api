@@ -16,6 +16,7 @@ app.use(
 
 app.get('/v1/auth/uyeCek', db.uyeCek)
 app.post('/v1/auth/kayitOl', db.kayitOl)
+app.post('/v1/auth/girisYap', db.girisYap)
 
 
 app.get('/', (request, response) => {
