@@ -1,5 +1,4 @@
 module.exports = {
-  jwtSecret : 'herseycokgizli',
   local: {
     db : {
       user: 'root',
@@ -16,5 +15,14 @@ module.exports = {
   },
   live: {
 
-  }
+  },
+  jwtSecret : 'herseycokgizli',
+  mail: {
+    host: 'smtp.yandex.com',
+    port: 465,
+    auth: {
+       user: 'destek@davetiyem.co',
+       pass: 'B2bo4-B2bo4'
+    }
+  },
 }
