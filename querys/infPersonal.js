@@ -55,12 +55,66 @@ const kisiselBilgiler = (request, response) => {
             else {
               const damatFoto = request.files.damatFoto[0].filename;
               const gelinFoto = request.files.gelinFoto[0].filename;
-              pool.query('INSERT INTO bilgi (gelinAdi, damatAdi, gelinBio, damatBio, gelinFoto, damatFoto) VALUES ($1, $2, $3, $4, $5, $6)', [gelinAdi, damatAdi, gelinBio, damatBio, gelinFoto, damatFoto], (error, result) => {
+              pool.query('INSERT INTO bilgi (userid, gelinAdi, damatAdi, gelinBio, damatBio, gelinFoto, damatFoto) VALUES ($1, $2, $3, $4, $5, $6)', [userid, gelinAdi, damatAdi, gelinBio, damatBio, gelinFoto, damatFoto], (error, result) => {
                 if (error) throw error
                 else {
                   response.send({
                     "status": 201,
                     "msg": "kişisel bilgileriniz oluştu"
+                  })
+                }
+              })
+            }
+            response.send({
+              "status": 404,
+              "msg": "resim yüklenmedi"
+            })
+          })
+        }
+
+      })
+    }
+    else if (results.rowCount == 0) {
+      pool.query('SELECT * from users Where userid = $1', [userid], (error, results) => {
+        if (error) {
+          throw error
+        }
+        else {
+          const username = (results.rows.map(item => item.username))[0]
+          console.log(username);
+          const upload = multer({
+            storage:
+              multer.diskStorage({
+                destination: function (req, file, cb) {
+                  cb(null, 'uploads/users/' + username);
+                },
+                filename: function (req, file, cb) {
+                  cb(null, new Date().getTime() + '-' + file.originalname);
+                }
+              })
+          }).fields([
+            {
+              name: 'gelinFoto',
+              maxCount: 1
+            },
+            {
+              name: 'damatFoto',
+              maxCount: 1
+            }]);
+
+          upload(request, response, function (err) {
+            if (err) {
+              console.log(err)
+            }
+            else {
+              const damatFoto = request.files.damatFoto[0].filename;
+              const gelinFoto = request.files.gelinFoto[0].filename;
+              pool.query('UPDATE "bilgi" SET "gelinAdi" = $1, "damatAdi" = $2, "gelinBio" = $3, "damatBio" = $4, "gelinFoto"= $5, "damatFoto" = $6 WHERE "userid" = $7',[gelinAdi, damatAdi, gelinBio, damatBio, gelinFoto, damatFoto, userid], (error, result) => {
+                if (error) throw error
+                else {
+                  response.send({
+                    "status": 201,
+                    "msg": "kişisel bilgileriniz güncellendi"
                   })
                 }
               })
