@@ -1,7 +1,8 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 
-const db = require('./querys/auth')
+const auth = require('./querys/auth')
+const ip = require('./querys/infPersonal')
 const config = require('./config')
 
 
@@ -15,12 +16,27 @@ app.use(
     })
 )
 
-app.get(config.version+'uyeCek', db.uyeCek)
-app.post(config.version+'kayitOl', db.kayitOl)
-app.post(config.version+'girisYap', db.girisYap)
+// Auth işlemleri
+app.get(config.version + 'uyeCek', auth.uyeCek)
+app.post(config.version + 'kayitOl', auth.kayitOl)
+app.post(config.version + 'girisYap', auth.girisYap)
+app.put(config.version + 'sifremi-unuttum', auth.sifremiSifirla)
+app.put(config.version + 'sifremi-sifirla/:hash', auth.sifremiDegistir)
 
-app.put(config.version+'sifremi-unuttum', db.sifremiSifirla)
-app.put(config.version+'sifremi-sifirla/:hash', db.sifremiDegistir)
+// Personel Information işlemleri
+
+// app.post(config.version + 'yukle', ip.upload.single('file'), function (req, res, next) {
+//     try{
+
+//         res.send(req.file)
+//     }
+//     catch(e){
+//         res.send(e)
+//     }
+// });
+
+
+app.post(config.version + 'kisisel', ip.kisiselBilgiler);
 
 
 app.get('/', (request, response) => {
