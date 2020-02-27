@@ -3,15 +3,7 @@ const config = require('../config');
 const pool = new Pool(config.local.db);
 
 var multer = require('multer');
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/users');
-  },
-  filename: function (req, file, cb) {
-    cb(null, new Date().getTime() + '-' + file.originalname);
-  }
-});
-
+const fs = require("fs");
 
 const kisiselBilgiler = (request, response) => {
   const { gelinAdi, gelinBio, damatAdi, damatBio, userid } = request.body;
@@ -32,7 +24,7 @@ const kisiselBilgiler = (request, response) => {
             storage:
               multer.diskStorage({
                 destination: function (req, file, cb) {
-                  cb(null, 'uploads/users/' + username);
+                  cb(null, config.local.folders.uploadFolder + '/' + username);
                 },
                 filename: function (req, file, cb) {
                   cb(null, new Date().getTime() + '-' + file.originalname);
@@ -86,7 +78,7 @@ const kisiselBilgiler = (request, response) => {
             storage:
               multer.diskStorage({
                 destination: function (req, file, cb) {
-                  cb(null, 'uploads/users/' + username);
+                  cb(null, config.local.folders.uploadFolder + '/' + username);
                 },
                 filename: function (req, file, cb) {
                   cb(null, new Date().getTime() + '-' + file.originalname);
@@ -109,7 +101,7 @@ const kisiselBilgiler = (request, response) => {
             else {
               const damatFoto = request.files.damatFoto[0].filename;
               const gelinFoto = request.files.gelinFoto[0].filename;
-              pool.query('UPDATE "bilgi" SET "gelinAdi" = $1, "damatAdi" = $2, "gelinBio" = $3, "damatBio" = $4, "gelinFoto"= $5, "damatFoto" = $6 WHERE "userid" = $7',[gelinAdi, damatAdi, gelinBio, damatBio, gelinFoto, damatFoto, userid], (error, result) => {
+              pool.query('UPDATE "bilgi" SET "gelinAdi" = $1, "damatAdi" = $2, "gelinBio" = $3, "damatBio" = $4, "gelinFoto"= $5, "damatFoto" = $6 WHERE "userid" = $7', [gelinAdi, damatAdi, gelinBio, damatBio, gelinFoto, damatFoto, userid], (error, result) => {
                 if (error) throw error
                 else {
                   response.send({
@@ -131,8 +123,26 @@ const kisiselBilgiler = (request, response) => {
   })
 }
 
+const kisiselFotoKaldir = (request, response) => {
+  const { fieldName, userid, fileName } = request.body;
+
+  pool.query('UPDATE bilgi SET "' + fieldName + '" = NULL WHERE "userid" = $1', [userid], (error, results) => {
+    if (error) {
+      throw error
+    }
+    fs.unlink(config.local.folders.uploadFolder + '/' + fileName, (error) => {
+      if (error)
+        throw error;
+      response.send({
+        "status": 201,
+        "msg": `${fieldName} başarılı bir şekilde silindi`
+      })
+    });
+  }
+  )
+}
 
 module.exports = {
-  // upload,
   kisiselBilgiler,
+  kisiselFotoKaldir,
 }

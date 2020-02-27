@@ -23,20 +23,8 @@ app.post(config.version + 'girisYap', auth.girisYap)
 app.put(config.version + 'sifremi-unuttum', auth.sifremiSifirla)
 app.put(config.version + 'sifremi-sifirla/:hash', auth.sifremiDegistir)
 
-// Personel Information işlemleri
-
-// app.post(config.version + 'yukle', ip.upload.single('file'), function (req, res, next) {
-//     try{
-
-//         res.send(req.file)
-//     }
-//     catch(e){
-//         res.send(e)
-//     }
-// });
-
-
 app.post(config.version + 'kisisel', ip.kisiselBilgiler);
+app.post(config.version + 'kisiselFotoKaldir', ip.kisiselFotoKaldir);
 
 
 app.get('/', (request, response) => {
