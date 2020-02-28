@@ -8,12 +8,12 @@ const fs = require("fs");
 const galeriYukle = (request, response) => {
     const { userid } = request.body;
 
-    pool.query('SELECT * FROM bilgi WHERE userid = 24', (error, results) => {
+    pool.query('SELECT * FROM foto WHERE userid = $1', [userid], (error, results) => {
         if (error) {
             throw error
         }
         if (results.rowCount >= 0 && results.rowCount <= 8) {
-            pool.query('SELECT * from users WHERE userid = 24', (error, results) => {
+            pool.query('SELECT * from users WHERE userid = $1', [userid], (error, results) => {
                 if (error) {
                     throw error
                 }
@@ -61,10 +61,36 @@ const galeriYukle = (request, response) => {
             })
         }
     })
+}
 
+const tekResimSil = (request, response) => {
+    const { resimAdi, userid } = request.body;
 
+    pool.query('DELETE FROM "foto" WHERE "userid" = $1, "foto"= $2', [id, resimAdi], (error, results) => {
+        if (error) {
+            throw error
+        }
+        response.send({
+            "status": 201,
+            "msg": "Fotoğraf silindi"
+        })
+    })
+}
+
+const topluSil = (request, response) => {
+    const { userid } = request.body;
+
+    pool.query('DELETE FROM "foto" WHERE "userid" = $1 ', [userid], (error, results) => {
+        if (error) throw error;
+        response.send({
+            "status" : 201,
+            "msg" : "Tüm fotoğraflar silindi. Albüm temizlendi."
+        })
+    })
 }
 
 module.exports = {
     galeriYukle,
+    tekResimSil,
+    topluSil,
 }
