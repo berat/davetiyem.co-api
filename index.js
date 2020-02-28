@@ -28,6 +28,7 @@ app.post(config.version + 'kisisel', ip.kisiselBilgiler);
 app.post(config.version + 'kisiselFotoKaldir', ip.kisiselFotoKaldir);
 
 app.post(config.version + 'galeriYukle', gy.galeriYukle)
+app.post(config.version + 'topluSil', gy.topluSil)
 
 app.get('/', (request, response) => {
     response.json({ info: 'Çalışıyor çalışmakta olan.' })
