@@ -8,9 +8,9 @@ module.exports = {
       port: 5432,
     },
     folders: {
-      uploadFolder: '../uploads/users',
-      baseUSer: '../users',
-      zipFiles: '../dfiles.zip',
+      uploadFolder: 'uploads/users',
+      baseUSer: 'users',
+      zipFiles: 'dfiles.zip',
     }
   },
   live: {
