@@ -36,7 +36,7 @@ app.post(config.version + 'topluSil', gy.topluSil)
 app.post(config.version + 'dugun', iw.dugunBilgileri)
 app.put(config.version + 'guncelleDugun', iw.guncelleDugun)
 
-app.put(config.version + 'genel', genel.genel)
+app.post(config.version + 'genel', genel.genel)
 
 app.get('/', (request, response) => {
     response.json({ info: 'Çalışıyor çalışmakta olan.' })

@@ -9,7 +9,7 @@ const genel = (request, response) => {
         if (error) throw error;
         if (results.rowCount == 0) {
             if (!dipNot) {
-                pool.query('INSERT INTO "genel" (userid, tarih, saat, dugunSozu, title, desc) VALUES ($1, $2, $3, $4, $5, $6)', [userid, tarih, saat, dugunSozu, title, desc], (error, results) => {
+                pool.query('INSERT INTO "genel" ("userid", "tarih", "saat", "dugunSozu", "title", "desc") VALUES ($1, $2, $3, $4, $5, $6)', [userid, tarih, saat, dugunSozu, title, desc], (error, results) => {
                     if (error) throw error;
                     else {
                         response.send({
@@ -20,7 +20,7 @@ const genel = (request, response) => {
                 })
             }
             else {
-                pool.query('INSERT INTO "genel" (userid, dipnot) VALUES ($1, $2)', [userid, dipNot], (error, results) => {
+                pool.query('INSERT INTO "genel" ("userid", "dipnot") VALUES ($1, $2)', [userid, dipNot], (error, results) => {
                     if (error) throw error;
                     else {
                         response.send({
@@ -32,8 +32,9 @@ const genel = (request, response) => {
             }
         }
         if (results.rowCount == 1) {
+            console.log(dipNot)
             if (!dipNot) {
-                pool.query('UPDATE genel SET tarih = $1, saat = $2, dugunSozu = $3, title = $4, desc = $5 WHERE userid = $6 ', [tarih, saat, dugunSozu, title, desc, userid], (error, results) => {
+                pool.query('UPDATE "genel" SET "tarih" = $1, "saat" = $2, "dugunSozu" = $3, "title" = $4, "desc" = $5 WHERE "userid" = $6 ', [tarih, saat, dugunSozu, title, desc, userid], (error, results) => {
                     if (error) throw error;
                     else {
                         response.send({
@@ -44,7 +45,7 @@ const genel = (request, response) => {
                 })
             }
             else {
-                pool.query('UPDATE genel SET dipnot = $1 WHERE userid = $2 ', [dipNot, userid], (error, results) => {
+                pool.query('UPDATE "genel" SET "dipnot" = $1 WHERE "userid" = $2 ', [dipNot, userid], (error, results) => {
                     if (error) throw error;
                     else {
                         response.send({
