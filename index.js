@@ -5,6 +5,7 @@ const config = require('./config')
 const auth = require('./querys/auth')
 const ip = require('./querys/infPersonal')
 const gy = require('./querys/photoAlbum');
+const iw = require('./querys/infWedding');
 
 
 const app = express()
@@ -30,6 +31,9 @@ app.post(config.version + 'kisiselFotoKaldir', ip.kisiselFotoKaldir);
 app.post(config.version + 'galeriYukle', gy.galeriYukle)
 app.post(config.version + 'tekResimSil', gy.tekResimSil)
 app.post(config.version + 'topluSil', gy.topluSil)
+
+app.post(config.version + 'dugun', iw.dugunBilgileri)
+app.post(config.version + 'guncelleDugun', iw.guncelleDugun)
 
 app.get('/', (request, response) => {
     response.json({ info: 'Çalışıyor çalışmakta olan.' })
