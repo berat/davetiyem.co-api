@@ -27,7 +27,7 @@ const guncelleDugun = (request, response) => {
             throw error
         }
         else {
-            pool.query('UPDATE users SET dbaslik = $1, dtarih = $2, dadres = $3, diframe = $4 WHERE dbaslik = $5 ', [baslik, tarih, adres, iframe, baslik], (error, results) => {
+            pool.query('UPDATE dugun SET dbaslik = $1, dtarih = $2, dadres = $3, diframe = $4 WHERE dbaslik = $5 ', [baslik, tarih, adres, iframe, baslik], (error, results) => {
                 if (error) throw error
                 response.send({
                     "status": 201,
