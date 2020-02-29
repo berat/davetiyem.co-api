@@ -33,7 +33,7 @@ app.post(config.version + 'tekResimSil', gy.tekResimSil)
 app.post(config.version + 'topluSil', gy.topluSil)
 
 app.post(config.version + 'dugun', iw.dugunBilgileri)
-app.post(config.version + 'guncelleDugun', iw.guncelleDugun)
+app.put(config.version + 'guncelleDugun', iw.guncelleDugun)
 
 app.get('/', (request, response) => {
     response.json({ info: 'Çalışıyor çalışmakta olan.' })
