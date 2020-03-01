@@ -59,7 +59,7 @@ const yorumGuncelle = (request, response) => {
 }
 
 const yorumuSil = (request, response) => {
-  const { userid, yorumSahibi, yorumu } = request.body
+  const { userid } = request.body
   pool.query(
     'SELECT * from "yorum" where "userid" = $1',
     [userid],
