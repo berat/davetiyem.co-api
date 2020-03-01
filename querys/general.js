@@ -32,7 +32,6 @@ const genel = (request, response) => {
             }
         }
         if (results.rowCount == 1) {
-            console.log(dipNot)
             if (!dipNot) {
                 pool.query('UPDATE "genel" SET "tarih" = $1, "saat" = $2, "dugunSozu" = $3, "title" = $4, "desc" = $5 WHERE "userid" = $6 ', [tarih, saat, dugunSozu, title, desc, userid], (error, results) => {
                     if (error) throw error;
