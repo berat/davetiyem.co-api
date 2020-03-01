@@ -8,6 +8,7 @@ const gy = require('./querys/photoAlbum');
 const iw = require('./querys/infWedding');
 const genel = require('./querys/general');
 const account = require('./querys/account')
+const yorum = require('./querys/comments')
 
 
 const app = express()
@@ -47,6 +48,12 @@ app.post(config.version + 'genel', genel.genel)
 
 // Hesap Bilgileri
 app.put(config.version + 'hesapGuncelle', account.hesapBilgileri)
+
+// Yorumlar Sayfası
+app.post(config.version + 'yorum', yorum.yorumlar)
+app.put(config.version + 'yorum', yorum.yorumGuncelle)
+app.delete(config.version + 'yorum', yorum.yorumuSil)
+
 
 app.get('/', (request, response) => {
     response.json({ info: 'Çalışıyor çalışmakta olan.' })
