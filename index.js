@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors');
 
 const config = require('./config')
 const auth = require('./querys/auth')
@@ -10,9 +11,8 @@ const genel = require('./querys/general');
 const account = require('./querys/account')
 const yorum = require('./querys/comments')
 
-
 const app = express()
-const port = 3000
+const port = 3100
 
 app.use(bodyParser.json())
 app.use(
@@ -20,6 +20,7 @@ app.use(
         extended: true,
     })
 )
+app.use(cors());
 
 // Auth işlemleri
 app.get(config.version + 'uyeCek', auth.uyeCek)
