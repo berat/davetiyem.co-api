@@ -30,10 +30,15 @@ app.post(config.version + 'kayitOl', auth.kayitOl)
 app.post(config.version + 'girisYap', auth.girisYap)
 app.put(config.version + 'sifremi-unuttum', auth.sifremiSifirla)
 app.put(config.version + 'sifremi-sifirla/:hash', auth.sifremiDegistir)
+app.get(config.version + 'aktifHesap', auth.aktifHesap)
 
 // Kişisel Bilgiler
+app.get(config.version + 'kisisel/:id', ip.bilgiCek);
 app.post(config.version + 'kisisel', ip.kisiselBilgiler);
 app.post(config.version + 'kisiselFotoKaldir', ip.kisiselFotoKaldir);
+app.post(config.version + 'gelin/:hash', ip.gelinFotoYukle);
+app.post(config.version + 'damat/:hash', ip.damatFotoYukle);
+app.post(config.version + 'fotoSil', ip.fotoSil);
 
 // fotoğraf Albümü
 app.post(config.version + 'galeriYukle', gy.galeriYukle)
