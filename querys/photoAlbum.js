@@ -5,6 +5,26 @@ const pool = new Pool(config.local.db);
 var multer = require('multer');
 const fs = require("fs");
 
+const getGaleri = (request, response) => {
+    const userid = request.params.id
+
+    pool.query('SELECT * FROM foto WHERE userid = $1', [userid], (error, results) => {
+        if(error) throw error
+        if(results.rowCount >0){
+            response.send({
+            status: 201,
+            photos: results.rows
+        })
+    }
+        else{
+            response.send({
+                status: 404,
+                msg: "Veritabanında kayıt bulunamadı"
+            })
+        }
+    })
+}
+
 const galeriYukle = (request, response) => {
     const { userid } = request.body;
 
@@ -122,6 +142,7 @@ const topluSil = (request, response) => {
 }
 
 module.exports = {
+    getGaleri,
     galeriYukle,
     tekResimSil,
     topluSil,
