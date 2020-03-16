@@ -47,7 +47,7 @@ app.post(config.version + 'topluSil', gy.topluSil)
 
 // Düğün bilgileri
 app.post(config.version + 'dugun', iw.dugunBilgileri)
-app.put(config.version + 'guncelleDugun', iw.guncelleDugun)
+app.get(config.version + 'dugun/:id', iw.getDugun)
 
 //Genel bilgiler
 app.post(config.version + 'genel', genel.genel)

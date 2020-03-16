@@ -263,7 +263,8 @@ const damatFotoYukle = (request, response) => {
                       else {
                         response.send({
                           status: 201,
-                          msg: 'Damat Fotoğrafı Yüklendi'
+                          msg: 'Damat Fotoğrafı Yüklendi',
+                          data: response
                         })
                       }
                     }
@@ -322,7 +323,8 @@ const damatFotoYukle = (request, response) => {
                       else {
                         response.send({
                           status: 201,
-                          msg: 'Damat Fotoğrafı Yüklendi'
+                          msg: 'Damat Fotoğrafı Yüklendi',
+                          data: response
                         })
                       }
                     }
@@ -410,7 +412,7 @@ const bilgiCek = (request, response) => {
 }
 
 const fotoSil = (request, response) => {
-  const { fileName, who, userid } = request.body
+  const { who, userid } = request.body
 
   pool.query(
     `UPDATE "bilgi" SET "${who}" = null WHERE "userid" = ${userid}`,
