@@ -80,17 +80,19 @@ const getDugun = (request, response) => {
     'SELECT * FROM dugun WHERE userid = $1',
     [userid],
     (error, results) => {
+      console.log(results)
       if (error) throw error
-      else if (results.rowCount >= 1) {
+      else if (results.rowCount != 0) {
         response.send({
           status: 201,
           data: results.rows
         })
+      } else {
+        response.send({
+          status: 404,
+          msg: 'Herhangi bir kayıt bulanamadı.'
+        })
       }
-      response.send({
-        status: 201,
-        msg: 'Herhangi bir kayıt bulanamadı.'
-      })
     }
   )
 }
