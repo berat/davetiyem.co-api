@@ -80,7 +80,6 @@ const getDugun = (request, response) => {
     'SELECT * FROM dugun WHERE userid = $1',
     [userid],
     (error, results) => {
-      console.log(results)
       if (error) throw error
       else if (results.rowCount != 0) {
         response.send({

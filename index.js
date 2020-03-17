@@ -41,7 +41,7 @@ app.post(config.version + 'damat/:hash', ip.damatFotoYukle);
 app.post(config.version + 'fotoSil', ip.fotoSil);
 
 // fotoğraf Albümü
-app.post(config.version + 'galeriYukle', gy.galeriYukle)
+app.post(config.version + 'galeriYukle/:id', gy.galeriYukle)
 app.get(config.version + 'galeri/:id', gy.getGaleri)
 app.post(config.version + 'tekResimSil', gy.tekResimSil)
 app.post(config.version + 'topluSil', gy.topluSil)
