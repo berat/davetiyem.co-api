@@ -44,6 +44,7 @@ const galeriYukle = (request, response) => {
     'SELECT * FROM foto WHERE userid = $1',
     [userid],
     (error, results) => {
+      const netice = results
       if (error) {
         throw error
       }
@@ -76,14 +77,29 @@ const galeriYukle = (request, response) => {
                   console.log(err)
                 } else {
                   var fileLists = []
-                  console.log(request.files)
+                  if (netice.rowCount == 0) {
+                    for (var j = 0; j < request.files.length; j++) {
+                      fileLists[j] = {
+                        filename: request.files[j].path.slice(9)
+                      }
+                    }
+                  } else {
+                    for (var j = 0; j < netice.rowCount; j++) {
+                      fileLists[j] = {
+                        filename: `${config.local.folders.uploadFolder.slice(
+                          9
+                        )}/${username}/${netice.rows[j].foto}`
+                      }
+                    }
+                  }
                   var sayac = 0
                   var i = 0
                   do {
-                    fileLists = [
-                      ...fileLists,
-                      { filename: request.files[i].path.slice(9) }
-                    ]
+                    if (netice.rowCount != 0) {
+                      fileLists.push({
+                        filename: request.files[i].path.slice(9)
+                      })
+                    }
                     pool.query(
                       'INSERT INTO foto (userid, foto) VALUES ($1, $2)',
                       [userid, request.files[i].filename]
@@ -116,16 +132,21 @@ const galeriYukle = (request, response) => {
 const tekResimSil = (request, response) => {
   const { fotoid, userid } = request.body
 
+  const reg = /((\/([^A-Z])+\/+\b))/
   pool.query(
-    'SELECT "foto" FROM "foto" WHERE "fotoid" = $1',
-    [fotoid],
+    `SELECT "foto" FROM "foto" WHERE "${
+      typeof fotoid !== 'number' ? 'foto' : 'fotoid'
+    }" = $1`,
+    [typeof fotoid !== 'number' ? fotoid.replace(reg, '') : fotoid],
     (error, results) => {
       const netice = results
       if (error) throw error
       else {
         pool.query(
-          'DELETE FROM "foto" WHERE "fotoid"= $1',
-          [fotoid],
+          `DELETE FROM "foto" WHERE ${
+            typeof fotoid !== 'number' ? 'foto' : 'fotoid'
+          } = $1`,
+          [typeof fotoid !== 'number' ? fotoid.replace(reg, '') : fotoid],
           (error, result) => {
             if (error) {
               throw error
@@ -138,7 +159,6 @@ const tekResimSil = (request, response) => {
                   throw error
                 } else {
                   const username = results.rows.map(item => item.username)[0]
-                  console.log(netice)
                   fs.unlink(
                     config.local.folders.uploadFolder +
                       '/' +
