@@ -52,6 +52,7 @@ app.get(config.version + 'dugun/:id', iw.getDugun)
 
 //Genel bilgiler
 app.post(config.version + 'genel', genel.genel)
+app.get(config.version + 'genel/:id', genel.getGenel)
 
 // Hesap Bilgileri
 app.put(config.version + 'hesapGuncelle', account.hesapBilgileri)
