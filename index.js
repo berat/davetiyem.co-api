@@ -57,9 +57,9 @@ app.post(config.version + 'genel', genel.genel)
 app.put(config.version + 'hesapGuncelle', account.hesapBilgileri)
 
 // Yorumlar Sayfası
+app.get(config.version + 'yorum/:id', yorum.yorum)
 app.post(config.version + 'yorum', yorum.yorumlar)
-app.put(config.version + 'yorum', yorum.yorumGuncelle)
-app.delete(config.version + 'yorum', yorum.yorumuSil)
+app.post(config.version + 'yorum/:id', yorum.yorumuSil)
 
 
 app.get('/', (request, response) => {

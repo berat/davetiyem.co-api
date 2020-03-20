@@ -2,8 +2,31 @@ const Pool = require('pg').Pool
 const config = require('../config')
 const pool = new Pool(config.local.db)
 
+const yorum = (request,response) => {
+  const userid = request.params.id;
+
+  pool.query(
+    'SELECT * FROM "yorum" WHERE userid = $1',
+    [userid],
+    (error, results) => {
+      if (error) throw error
+      else if (results.rowCount != 0) {
+        response.send({
+          status: 201,
+          data: results.rows
+        })
+      } else {
+        response.send({
+          status: 404,
+          msg: 'Herhangi bir kayıt bulanamadı.'
+        })
+      }
+    }
+  )
+}
+
 const yorumlar = (request, response) => {
-  const { userid, yorumSahibi, yorumu } = request.body
+  const { userid } = request.body[0]
 
   pool.query(
     'SELECT * from "yorum" where "userid" = $1',
@@ -11,17 +34,67 @@ const yorumlar = (request, response) => {
     (error, results) => {
       if (error) throw error
       if (results.rowCount >= 0) {
-        pool.query(
-          'INSERT INTO yorum ("userid", "yorumSahibi","yorumu") VALUES ($1, $2, $3)',
-          [userid, yorumSahibi, yorumu],
-          (error, results) => {
-            if (error) throw error
+        if (results.rowCount > 0) {
+          pool.query(
+            'DELETE FROM "yorum" WHERE "userid" = $1 ',
+            [userid],
+            (error, results) => {
+              if (error) throw error
+              else {
+                var i = 0
+                do {
+                  var yorumSahibi = request.body[i].yorumSahibi
+                  var yorumu = request.body[i].yorumu
+                  pool.query(
+                    'INSERT INTO yorum ("userid", "yorumSahibi","yorumu") VALUES ($1, $2, $3)',
+                    [userid, yorumSahibi, yorumu],
+                    (error, results) => {
+                      if (error) throw error
+                    }
+                  )
+                  i++
+                } while (i < request.body.length)
+
+                if (i == request.body.length) {
+                  response.send({
+                    status: 201,
+                    msg: 'Yorumlar başarılı bir şekilde eklendi'
+                  })
+                } else {
+                  response.send({
+                    status: 404,
+                    msg: 'Site admini ile iletişime geçin.'
+                  })
+                }
+              }
+            }
+          )
+        } else {
+          var i = 0
+          do {
+            var yorumSahibi = request.body[i].yorumSahibi
+            var yorumu = request.body[i].yorumu
+            pool.query(
+              'INSERT INTO yorum ("userid", "yorumSahibi","yorumu") VALUES ($1, $2, $3)',
+              [userid, yorumSahibi, yorumu],
+              (error, results) => {
+                if (error) throw error
+              }
+            )
+            i++
+          } while (i < request.body.length)
+          if (i == request.body.length) {
             response.send({
               status: 201,
               msg: 'Yorumlar başarılı bir şekilde eklendi'
             })
+          } else {
+            response.send({
+              status: 404,
+              msg: 'Site admini ile iletişime geçin.'
+            })
           }
-        )
+        }
       } else {
         response.send({
           status: 404,
@@ -32,59 +105,23 @@ const yorumlar = (request, response) => {
   )
 }
 
-const yorumGuncelle = (request, response) => {
-  const { userid, yorumSahibi, yorumu } = request.body
-
-  pool.query(
-    'SELECT * from "yorum" where "userid" = $1',
-    [userid],
-    (error, results) => {
-      if (error) throw error
-      if (results.rowCount >= 0) {
-        const eskiYorumu = results.rows.map(item => item.yorumu)[0]
-        pool.query(
-          'UPDATE "yorum" SET "yorumSahibi" = $1, "yorumu" = $2 WHERE "yorumu" = $3 and "userid" = $4',
-          [yorumSahibi, yorumu, eskiYorumu, userid],
-          (error, results) => {
-            if (error) throw error
-            response.send({
-              status: 201,
-              msg: 'Yorumlar başarılı bir şekilde güncellendi'
-            })
-          }
-        )
-      }
-    }
-  )
-}
-
 const yorumuSil = (request, response) => {
-  const { userid } = request.body
+  const userid = request.params.id
   pool.query(
-    'SELECT * from "yorum" where "userid" = $1',
+    'DELETE FROM "yorum" WHERE "userid" = $1',
     [userid],
     (error, results) => {
       if (error) throw error
-      if (results.rowCount >= 0) {
-        const eskiYorumu = results.rows.map(item => item.yorumu)[0]
-        pool.query(
-          'DELETE FROM "yorum" WHERE "yorumu" = $1 and "userid" = $2',
-          [eskiYorumu, userid],
-          (error, results) => {
-            if (error) throw error
-            response.send({
-              status: 201,
-              msg: 'Yorumlar başarılı bir şekilde silindi'
-            })
-          }
-        )
-      }
+      response.send({
+        status: 201,
+        msg: 'Yorumlar başarılı bir şekilde silindi'
+      })
     }
   )
 }
 
 module.exports = {
   yorumlar,
-  yorumGuncelle,
-  yorumuSil
+  yorumuSil,
+  yorum
 }

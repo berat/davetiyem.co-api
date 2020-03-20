@@ -111,7 +111,7 @@ const galeriYukle = (request, response) => {
                     response.send({
                       status: 201,
                       filename: fileLists,
-                      msg: 'resimler yüklendi'
+                      msg: 'Resimler yüklendi.'
                     })
                   }
                 }
