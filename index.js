@@ -56,6 +56,7 @@ app.get(config.version + 'genel/:id', genel.getGenel)
 
 // Hesap Bilgileri
 app.put(config.version + 'hesapGuncelle', account.hesapBilgileri)
+app.get(config.version + 'hesap/:id', account.hesap)
 
 // Yorumlar Sayfası
 app.get(config.version + 'yorum/:id', yorum.yorum)
