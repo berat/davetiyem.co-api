@@ -35,7 +35,6 @@ const dugunBilgileri = (request, response) => {
           })
         }
       } else {
-        console.log(request.body)
         pool.query(
           'DELETE FROM "dugun" WHERE userid= $1',
           [userid],

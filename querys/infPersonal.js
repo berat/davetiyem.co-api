@@ -417,7 +417,6 @@ const fotoSil = (request, response) => {
   pool.query(
     `UPDATE "bilgi" SET "${who}" = null WHERE "userid" = ${userid}`,
     (error, results) => {
-      console.log(request)
       if (error) throw error
       else if(results.rowCount == 1) {
         response.send({

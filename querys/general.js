@@ -7,14 +7,15 @@ const getGenel = (request, response) => {
 
   pool.query(
     'SELECT * FROM genel WHERE userid = $1',
-    [userid], (error, results) => {
-      console.log(results.rows)
-        if (error) throw error
-        response.send({
-            status: 201,
-            data: results.rows
-        })
-    })
+    [userid],
+    (error, results) => {
+      if (error) throw error
+      response.send({
+        status: 201,
+        data: results.rows
+      })
+    }
+  )
 }
 
 const genel = (request, response) => {
