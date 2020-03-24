@@ -106,7 +106,12 @@ const gelinFotoYukle = (request, response) => {
                     )
                   },
                   filename: function(req, file, cb) {
-                    cb(null, new Date().getTime() + '-' + file.originalname.replace(/ /g, "-"))
+                    cb(
+                      null,
+                      new Date().getTime() +
+                        '-' +
+                        file.originalname.replace(/ /g, '-')
+                    )
                   }
                 })
               }).fields([
@@ -166,7 +171,12 @@ const gelinFotoYukle = (request, response) => {
                     )
                   },
                   filename: function(req, file, cb) {
-                    cb(null, new Date().getTime() + '-' + file.originalname.replace(/ /g, "-"))
+                    cb(
+                      null,
+                      new Date().getTime() +
+                        '-' +
+                        file.originalname.replace(/ /g, '-')
+                    )
                   }
                 })
               }).fields([
@@ -240,7 +250,12 @@ const damatFotoYukle = (request, response) => {
                     )
                   },
                   filename: function(req, file, cb) {
-                    cb(null, new Date().getTime() + '-' + file.originalname.replace(/ /g, "-"))
+                    cb(
+                      null,
+                      new Date().getTime() +
+                        '-' +
+                        file.originalname.replace(/ /g, '-')
+                    )
                   }
                 })
               }).fields([
@@ -300,7 +315,12 @@ const damatFotoYukle = (request, response) => {
                     )
                   },
                   filename: function(req, file, cb) {
-                    cb(null, new Date().getTime() + '-' + file.originalname.replace(/ /g, "-"))
+                    cb(
+                      null,
+                      new Date().getTime() +
+                        '-' +
+                        file.originalname.replace(/ /g, '-')
+                    )
                   }
                 })
               }).fields([
@@ -389,24 +409,27 @@ const bilgiCek = (request, response) => {
     [userid],
     (error, results) => {
       if (error) throw error
-      pool.query('SELECT * FROM "users" WHERE "userid" = $1 ', [userid], (error,result) => {
-      if (error) throw error
-        else{
-          if (results.rowCount == 1) {
-            response.send({
-              status: 201,
-              username: result.rows.map(item => item.username)[0],
-              data: results.rows
-            })
-          } else {
-            response.send({
-              status: 404,
-              msg: 'Site admini ile iletişime geçin.'
-            })
+      pool.query(
+        'SELECT * FROM "users" WHERE "userid" = $1 ',
+        [userid],
+        (error, result) => {
+          if (error) throw error
+          else {
+            if (results.rowCount == 1) {
+              response.send({
+                status: 201,
+                username: result.rows.map(item => item.username)[0],
+                data: results.rows
+              })
+            } else {
+              response.send({
+                status: 404,
+                msg: 'Site admini ile iletişime geçin.'
+              })
+            }
           }
         }
-      })
-      
+      )
     }
   )
 }
@@ -418,16 +441,15 @@ const fotoSil = (request, response) => {
     `UPDATE "bilgi" SET "${who}" = null WHERE "userid" = ${userid}`,
     (error, results) => {
       if (error) throw error
-      else if(results.rowCount == 1) {
+      else if (results.rowCount == 1) {
         response.send({
           status: 201,
-          msg: "Fotoğaf kaldırıldı."
+          msg: 'Fotoğaf kaldırıldı.'
         })
-      }
-      else{
+      } else {
         response.send({
           status: 201,
-          msg: "Fotoğraf kaldıralamadı. Site admini ile iletişime geçin."
+          msg: 'Fotoğraf kaldıralamadı. Site admini ile iletişime geçin.'
         })
       }
     }

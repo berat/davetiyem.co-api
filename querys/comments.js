@@ -2,8 +2,8 @@ const Pool = require('pg').Pool
 const config = require('../config')
 const pool = new Pool(config.local.db)
 
-const yorum = (request,response) => {
-  const userid = request.params.id;
+const yorum = (request, response) => {
+  const userid = request.params.id
 
   pool.query(
     'SELECT * FROM "yorum" WHERE userid = $1',
