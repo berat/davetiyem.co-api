@@ -9,6 +9,7 @@ const gy = require('./querys/photoAlbum')
 const iw = require('./querys/infWedding')
 const genel = require('./querys/general')
 const account = require('./querys/account')
+const mail = require('./querys/mail')
 const yorum = require('./querys/comments')
 
 const app = express()
@@ -25,6 +26,8 @@ app.use(cors())
 // Auth işlemleri
 app.get(config.version + 'uyeCek', auth.uyeCek)
 app.get(config.version + 'uyeCek/:id', auth.kullaniciKontrol)
+
+app.post(config.version + 'mailGonder', mail.gonder)
 
 app.post(config.version + 'kayitOl', auth.kayitOl)
 app.post(config.version + 'girisYap', auth.girisYap)

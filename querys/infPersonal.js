@@ -173,7 +173,7 @@ const gelinFotoYukle = (request, response) => {
                         response.send({
                           status: 201,
                           msg: 'Gelin Fotoğrafı Yüklendi',
-                          data: response
+                          data: request.files.gelinFoto[0]
                         })
                       }
                     }
@@ -309,14 +309,14 @@ const damatFotoYukle = (request, response) => {
                   const damatFoto = request.files.damatFoto[0].filename
                   pool.query(
                     'INSERT INTO bilgi ("userid","damatFoto") VALUES ($1, $2)',
-                    [userid, gelinFoto],
+                    [userid, damatFoto],
                     (error, result) => {
                       if (error) throw error
                       else {
                         response.send({
                           status: 201,
                           msg: 'Damat Fotoğrafı Yüklendi',
-                          data: response
+                          data: request.files.damatFoto[0]
                         })
                       }
                     }
