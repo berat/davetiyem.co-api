@@ -26,6 +26,9 @@
     "start": "node querys/index.js",
     "build": "babel querys/*.js -d dist"
   },
+  "engines": {
+    "node": "8"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/berat/davetiyem.co-api.git"
