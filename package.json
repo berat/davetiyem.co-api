@@ -23,7 +23,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./dist/querys/index.js",
+    "start": "node querys/index.js",
     "build": "babel querys/*.js -d dist"
   },
   "repository": {
