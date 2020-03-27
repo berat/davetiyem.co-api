@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@babel/polyfill": "^7.4.4",
+    "babel-preset-env": "^1.7.0",
     "cors": "^2.8.5",
     "cuid": "^2.1.8",
     "express": "^4.17.1",
@@ -14,10 +16,15 @@
     "unixcrypt": "^1.0.9",
     "unzipper": "^0.10.9"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "nodemon": "^1.19.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "node ./dist/querys/index.js",
+    "build": "babel querys/*.js -d dist"
   },
   "repository": {
     "type": "git",

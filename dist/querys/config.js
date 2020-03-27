@@ -1,30 +1,30 @@
+'use strict';
+
 module.exports = {
   local: {
-    db : {
+    db: {
       user: 'root',
       host: 'localhost',
       database: 'davetiyem_db',
       password: '',
-      port: 5432,
+      port: 5432
     },
-    folders: {
+    folders: {
       uploadFolder: '../public/uploads/users',
       baseUSer: '../users',
-      zipFiles: '../dfiles.zip',
+      zipFiles: '../dfiles.zip'
     }
   },
-  live: {
-
-  },
-  jwtSecret : 'herseycokgizli',
-  mail: {
+  live: {},
+  jwtSecret: 'herseycokgizli',
+  mail: {
     host: 'smtp.yandex.com',
     port: 465,
     secure: true,
     auth: {
-       user: 'destek@davetiyem.co',
-       pass: 'B2bo4-B2bo4'
+      user: 'destek@davetiyem.co',
+      pass: 'B2bo4-B2bo4'
     }
   },
   version: '/v1/auth/'
-}
+};

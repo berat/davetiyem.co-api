@@ -1,5 +1,5 @@
 const Pool = require('pg').Pool
-const config = require('../config')
+const config = require('./config')
 const pool = new Pool(config.local.db)
 
 var unixcrypt = require('unixcrypt')
