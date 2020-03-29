@@ -16,6 +16,7 @@ const app = express()
 const port = 3100
 
 app.use(bodyParser.json())
+app.use(express.static(config.local.folders.uploadFolder))
 app.use(
   bodyParser.urlencoded({
     extended: true
