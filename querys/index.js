@@ -22,9 +22,20 @@ app.use(
     extended: true
   })
 )
-app.use(cors({ origin: true, credentials: true }))
-
-app.options('*', cors())
+var whitelist = [
+  'https://davetiyem.co',
+  'http://davetiyem.co',
+  'http://0.0.0.0:3000'
+]
+var corsOptions = {
+  origin: function(origin, callback) {
+    var originIsWhitelisted = whitelist.indexOf(origin) !== -1
+    callback(null, originIsWhitelisted)
+  },
+  credentials: true
+}
+app.use(cors(corsOptions))
+// app.options('*', cors())
 // Auth işlemleri
 app.get(config.version + 'uyeCek', auth.uyeCek)
 app.get(config.version + 'uyeCek/:id', auth.kullaniciKontrol)
