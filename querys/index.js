@@ -55,6 +55,13 @@ app.use(function(req, res, next) {
 
   next()
 })
+
+app.all('/*', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With')
+  next()
+})
+
 // Auth işlemleri
 app.get(config.version + 'uyeCek', auth.uyeCek)
 app.get(config.version + 'uyeCek/:id', auth.kullaniciKontrol)
