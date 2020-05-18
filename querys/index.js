@@ -34,8 +34,27 @@ var corsOptions = {
   },
   credentials: true
 }
-app.use(cors(corsOptions))
+app.use(cors({ origin: '*' }))
 app.options('*', cors())
+
+app.use(function(req, res, next) {
+  // izin vermek istedigin website'lari ekle
+  res.setHeader('Access-Control-Allow-Origin', 'https://davetiyem.co/')
+
+  // izin vermek istedigin metodlari
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+  )
+
+  // izin vermek istedigin header
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+
+  // eger siten cookie alsin istiosan request'te
+  res.setHeader('Access-Control-Allow-Credentials', true)
+
+  next()
+})
 // Auth işlemleri
 app.get(config.version + 'uyeCek', auth.uyeCek)
 app.get(config.version + 'uyeCek/:id', auth.kullaniciKontrol)
