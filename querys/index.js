@@ -35,7 +35,7 @@ var corsOptions = {
   credentials: true
 }
 app.use(cors(corsOptions))
-// app.options('*', cors())
+app.options('*', cors())
 // Auth işlemleri
 app.get(config.version + 'uyeCek', auth.uyeCek)
 app.get(config.version + 'uyeCek/:id', auth.kullaniciKontrol)
