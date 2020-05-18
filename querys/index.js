@@ -22,7 +22,7 @@ app.use(
     extended: true
   })
 )
-var allowedOrigins = ['http://localhost:3000', 'http://davetiyem.co']
+var allowedOrigins = ['http://localhost:3000', 'https://davetiyem.co']
 app.use(
   cors({
     origin: function(origin, callback) {
