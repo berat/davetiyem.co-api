@@ -41,7 +41,14 @@ app.use(
     credentials: true
   })
 )
-
+app.use((req, res, next) => {
+  var allowedOrigins = ['http://localhost:3000', 'https://davetiyem.co']
+  var origin = req.headers.origin
+  if (allowedOrigins.indexOf(origin) > -1) {
+    res.setHeader('Access-Control-Allow-Origin', origin)
+  }
+  next()
+})
 // Auth işlemleri
 app.get(config.version + 'uyeCek', auth.uyeCek)
 app.get(config.version + 'uyeCek/:id', auth.kullaniciKontrol)
