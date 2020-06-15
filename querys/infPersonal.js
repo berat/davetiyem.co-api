@@ -67,6 +67,13 @@ const gelinFotoYukle = (request, response) => {
               throw error
             } else {
               const username = results.rows.map(item => item.username)[0]
+              if (
+                fs.existsSync(
+                  config.local.folders.uploadFolder + '/' + username + '/profil'
+                ) !== true
+              ) {
+                fs.mkdirSync(`${config.local.folders.uploadFolder}/${username}/profil`)
+              }
               const upload = multer({
                 storage: multer.diskStorage({
                   destination: function(req, file, cb) {
