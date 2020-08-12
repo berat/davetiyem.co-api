@@ -76,8 +76,7 @@ const dugunBilgileri = (request, response) => {
 }
 
 const getDugun = (request, response) => {
-  const hash = request.params.id
-  const userid = jwt.verify(hash, config.jwtSecret).userid
+  const userid = request.params.id
 
   pool.query(
     'SELECT * FROM dugun WHERE userid = $1',

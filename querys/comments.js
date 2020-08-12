@@ -4,8 +4,7 @@ const pool = new Pool(config.local.db)
 const jwt = require('jsonwebtoken')
 
 const yorum = (request, response) => {
-  const hash = request.params.id
-  const userid = jwt.verify(hash, config.jwtSecret).userid
+  const userid = request.params.id
 
   pool.query(
     'SELECT * FROM "yorum" WHERE userid = $1',

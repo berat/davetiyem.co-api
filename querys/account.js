@@ -8,8 +8,7 @@ const jwt = require('jsonwebtoken')
 
 
 const hesap = (request, response) => {
-  const hash = request.params.id
-  const userid = jwt.verify(hash, config.jwtSecret).userid
+  const userid = request.params.id
 
   pool.query(
     'SELECT * FROM "users" WHERE "userid" = $1',
