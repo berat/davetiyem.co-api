@@ -39,7 +39,7 @@ app.options('*', cors())
 
 app.use(function(req, res, next) {
   // izin vermek istedigin website'lari ekle
-  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Origin', 'https://davetiyem.co/')
 
   // izin vermek istedigin metodlari
   res.setHeader(
