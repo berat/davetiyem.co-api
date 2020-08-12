@@ -7,7 +7,8 @@ const fs = require('fs')
 const jwt = require('jsonwebtoken')
 
 const kisiselBilgiler = (request, response) => {
-  const { gelinAdi, gelinBio, damatAdi, damatBio, userid } = request.body
+  const { gelinAdi, gelinBio, damatAdi, damatBio, hash } = request.body
+  const userid = jwt.verify(hash, config.jwtSecret).userid
 
   pool.query(
     'SELECT * FROM bilgi WHERE userid = $1',
@@ -50,7 +51,8 @@ const kisiselBilgiler = (request, response) => {
 }
 
 const gelinFotoYukle = (request, response) => {
-  const userid = request.params.hash
+  const hash = request.params.hash
+  const userid = jwt.verify(hash, config.jwtSecret).userid
 
   pool.query(
     'SELECT * FROM "bilgi" WHERE "userid" = $1',
@@ -201,7 +203,9 @@ const gelinFotoYukle = (request, response) => {
 }
 
 const damatFotoYukle = (request, response) => {
-  const userid = request.params.hash
+  const hash = request.params.hash
+  const userid = jwt.verify(hash, config.jwtSecret).userid
+
   pool.query(
     'SELECT * FROM "bilgi" WHERE "userid" = $1',
     [userid],
@@ -344,7 +348,8 @@ const damatFotoYukle = (request, response) => {
 }
 
 const kisiselFotoKaldir = (request, response) => {
-  const { fieldName, userid, fileName } = request.body
+  const { fieldName, hash, fileName } = request.body
+  const userid = jwt.verify(hash, config.jwtSecret).userid
 
   pool.query(
     'UPDATE bilgi SET "' + fieldName + '" = NULL WHERE "userid" = $1',
@@ -417,7 +422,8 @@ const bilgiCek = (request, response) => {
 }
 
 const fotoSil = (request, response) => {
-  const { who, userid } = request.body
+  const { who, hash } = request.body
+  const userid = jwt.verify(hash, config.jwtSecret).userid
 
   pool.query(
     `UPDATE "bilgi" SET "${who}" = null WHERE "userid" = ${userid}`,

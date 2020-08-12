@@ -22,7 +22,9 @@ const getGenel = (request, response) => {
 }
 
 const genel = (request, response) => {
-  const { userid, tarih, saat, dugunSozu, dipNot, title, desc } = request.body
+  const { hash, tarih, saat, dugunSozu, dipNot, title, desc } = request.body
+  const userid = jwt.verify(hash, config.jwtSecret).userid
+
 
   pool.query(
     'SELECT * FROM genel WHERE userid = $1',

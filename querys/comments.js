@@ -28,7 +28,8 @@ const yorum = (request, response) => {
 }
 
 const yorumlar = (request, response) => {
-  const { userid } = request.body[0]
+  const { hash } = request.body[0]
+  const userid = jwt.verify(hash, config.jwtSecret).userid
 
   pool.query(
     'SELECT * from "yorum" where "userid" = $1',
@@ -108,7 +109,9 @@ const yorumlar = (request, response) => {
 }
 
 const yorumuSil = (request, response) => {
-  const userid = request.params.id
+  const hash = request.params.id
+  const userid = jwt.verify(hash, config.jwtSecret).userid
+
   pool.query(
     'DELETE FROM "yorum" WHERE "userid" = $1',
     [userid],
