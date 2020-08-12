@@ -4,6 +4,7 @@ const pool = new Pool(config.local.db)
 
 var multer = require('multer')
 const fs = require('fs')
+const jwt = require('jsonwebtoken')
 
 const kisiselBilgiler = (request, response) => {
   const { gelinAdi, gelinBio, damatAdi, damatBio, userid } = request.body

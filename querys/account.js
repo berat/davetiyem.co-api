@@ -26,8 +26,10 @@ const hesap = (request, response) => {
 }
 
 const hesapBilgileri = (request, response) => {
-  const { userid, kullaniciAdi, sifre, mail } = request.body
+  const { hash, kullaniciAdi, sifre, mail } = request.body
   const passwordHashed = unixcrypt.encrypt(sifre, '$5$rounds=535000')
+  
+  const userid = jwt.verify(hash, config.jwtSecret).userid
 
   pool.query(
     'SELECT * FROM "users" WHERE "userid" = $1',

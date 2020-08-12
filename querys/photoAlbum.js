@@ -4,6 +4,7 @@ const pool = new Pool(config.local.db)
 
 var multer = require('multer')
 const fs = require('fs')
+const jwt = require('jsonwebtoken')
 
 const getGaleri = (request, response) => {
   const hash = request.params.id

@@ -1,6 +1,7 @@
 const Pool = require('pg').Pool
 const config = require('./config')
 const pool = new Pool(config.local.db)
+const jwt = require('jsonwebtoken')
 
 const dugunBilgileri = (request, response) => {
   const { userid } = request.body[0]
