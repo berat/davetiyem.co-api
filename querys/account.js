@@ -6,7 +6,9 @@ var unixcrypt = require('unixcrypt')
 var fs = require('fs')
 
 const hesap = (request, response) => {
-  const userid = request.params.id
+  const hash = request.params.id
+  const userid = jwt.verify(hash, config.jwtSecret).userid
+
   pool.query(
     'SELECT * FROM "users" WHERE "userid" = $1',
     [userid],
