@@ -22,48 +22,63 @@ app.use(
     extended: true
   })
 )
-var whitelist = [
-  'https://davetiyem.co',
-  'http://davetiyem.co',
-  'http://0.0.0.0:3000'
-]
-var corsOptions = {
-  origin: function(origin, callback) {
-    var originIsWhitelisted = whitelist.indexOf(origin) !== -1
-    callback(null, originIsWhitelisted)
-  },
-  credentials: true
-}
+// var whitelist = [
+//   'https://davetiyem.co',
+//   'http://davetiyem.co',
+//   'http://0.0.0.0:3000'
+// ]
+// var corsOptions = {
+//   origin: function(origin, callback) {
+//     var originIsWhitelisted = whitelist.indexOf(origin) !== -1
+//     callback(null, originIsWhitelisted)
+//   },
+//   credentials: true
+// }
 app.use(cors())
-app.options('*', cors())
+// app.options('*', cors())
 
-app.use(function(req, res, next) {
-  // izin vermek istedigin website'lari ekle
-  res.setHeader('Access-Control-Allow-Origin', 'https://davetiyem.co/')
+// app.use(function(req, res, next) {
+//   // izin vermek istedigin website'lari ekle
+//   res.setHeader('Access-Control-Allow-Origin', 'https://davetiyem.co/')
 
-  // izin vermek istedigin metodlari
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET, POST, OPTIONS, PUT, PATCH, DELETE'
-  )
+//   // izin vermek istedigin metodlari
+//   res.setHeader(
+//     'Access-Control-Allow-Methods',
+//     'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+//   )
 
-  // izin vermek istedigin header
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+//   // izin vermek istedigin header
+//   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
 
-  // eger siten cookie alsin istiosan request'te
-  res.setHeader('Access-Control-Allow-Credentials', true)
+//   // eger siten cookie alsin istiosan request'te
+//   res.setHeader('Access-Control-Allow-Credentials', true)
 
-  next()
-})
+//   next()
+// })
 
-app.all('/*', function(req, res, next) {
+// app.all('/*', function(req, res, next) {
+//   res.header('Access-Control-Allow-Origin', '*')
+//   res.header(
+//     'Access-Control-Allow-Headers',
+//     'Origin, X-Requested-With, Content-Type, Accept'
+//   )
+//   next()
+// })
+
+var allowCrossDomain = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  )
-  next()
-})
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+
+  // intercept OPTIONS method
+  if ('OPTIONS' == req.method) {
+    res.send(200)
+  } else {
+    next()
+  }
+}
+
+app.use(allowCrossDomain)
 
 // Auth işlemleri
 app.get(config.version + 'uyeCek', auth.uyeCek)
