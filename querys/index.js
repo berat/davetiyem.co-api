@@ -34,7 +34,7 @@ var corsOptions = {
   },
   credentials: true
 }
-app.use(cors({ origin: '*' }))
+app.use(cors())
 app.options('*', cors())
 
 app.use(function(req, res, next) {
@@ -60,10 +60,8 @@ app.all('/*', function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
   res.header(
     'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    'Origin, X-Requested-With, Content-Type, Accept'
   )
-  res.header('Access-Control-Allow-Credentials', true)
-
   next()
 })
 
