@@ -72,7 +72,7 @@ app.post(config.version + 'kayitOl', auth.kayitOl)
 app.post(config.version + 'girisYap', auth.girisYap)
 app.put(config.version + 'sifremi-unuttum', auth.sifremiSifirla)
 app.put(config.version + 'sifremi-sifirla/:hash', auth.sifremiDegistir)
-app.get(config.version + 'aktifHesap', auth.aktifHesap)
+app.gegt(config.version + 'aktifHesap/:hash', auth.aktifHesap)
 
 // Kişisel Bilgiler
 app.get(config.version + 'kisisel/:id', ip.bilgiCek)
