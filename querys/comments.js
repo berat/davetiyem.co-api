@@ -3,7 +3,8 @@ const config = require('./config')
 const pool = new Pool(config.local.db)
 
 const yorum = (request, response) => {
-  const userid = request.params.id
+  const hash = request.params.id
+  const userid = jwt.verify(hash, config.jwtSecret).userid
 
   pool.query(
     'SELECT * FROM "yorum" WHERE userid = $1',

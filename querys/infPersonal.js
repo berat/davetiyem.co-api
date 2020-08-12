@@ -382,7 +382,9 @@ const kisiselFotoKaldir = (request, response) => {
 }
 
 const bilgiCek = (request, response) => {
-  const userid = request.params.id
+  const hash = request.params.id
+  const userid = jwt.verify(hash, config.jwtSecret).userid
+
   pool.query(
     'SELECT * FROM "bilgi" WHERE "userid" = $1',
     [userid],

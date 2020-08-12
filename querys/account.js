@@ -4,6 +4,8 @@ const pool = new Pool(config.local.db)
 
 var unixcrypt = require('unixcrypt')
 var fs = require('fs')
+const jwt = require('jsonwebtoken')
+
 
 const hesap = (request, response) => {
   const hash = request.params.id

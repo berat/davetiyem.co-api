@@ -3,7 +3,9 @@ const config = require('./config')
 const pool = new Pool(config.local.db)
 
 const getGenel = (request, response) => {
-  const userid = request.params.id
+  const hash = request.params.id
+  const userid = jwt.verify(hash, config.jwtSecret).userid
+
 
   pool.query(
     'SELECT * FROM genel WHERE userid = $1',

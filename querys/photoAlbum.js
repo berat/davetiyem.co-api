@@ -6,7 +6,8 @@ var multer = require('multer')
 const fs = require('fs')
 
 const getGaleri = (request, response) => {
-  const userid = request.params.id
+  const hash = request.params.id
+  const userid = jwt.verify(hash, config.jwtSecret).userid
 
   pool.query(
     'SELECT * FROM "users" WHERE "userid" = $1',
