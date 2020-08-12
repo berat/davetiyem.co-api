@@ -48,7 +48,10 @@ app.use(function(req, res, next) {
   )
 
   // izin vermek istedigin header
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  )
 
   // eger siten cookie alsin istiosan request'te
   res.setHeader('Access-Control-Allow-Credentials', true)
