@@ -40,7 +40,8 @@ const getGaleri = (request, response) => {
 }
 
 const galeriYukle = (request, response) => {
-  const userid = request.params.id
+  const hash = request.params.id
+  const userid = jwt.verify(hash, config.jwtSecret).userid
 
   pool.query(
     'SELECT * FROM foto WHERE userid = $1',
@@ -132,7 +133,8 @@ const galeriYukle = (request, response) => {
 }
 
 const tekResimSil = (request, response) => {
-  const { fotoid, userid } = request.body
+  const { fotoid, hash } = request.body
+  const userid = jwt.verify(hash, config.jwtSecret).userid
 
   const reg = /((\/([^A-Z])+\/+\b))/
   pool.query(
@@ -186,7 +188,9 @@ const tekResimSil = (request, response) => {
 }
 
 const topluSil = (request, response) => {
-  const { userid } = request.body
+  const { hash } = request.body
+  const userid = jwt.verify(hash, config.jwtSecret).userid
+
   pool.query(
     'SELECT foto FROM foto WHERE userid = $1',
     [userid],
