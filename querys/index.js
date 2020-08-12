@@ -48,10 +48,7 @@ app.use(function(req, res, next) {
   )
 
   // izin vermek istedigin header
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-  )
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
 
   // eger siten cookie alsin istiosan request'te
   res.setHeader('Access-Control-Allow-Credentials', true)
@@ -61,7 +58,7 @@ app.use(function(req, res, next) {
 
 app.all('/*', function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With')
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
   next()
 })
 
