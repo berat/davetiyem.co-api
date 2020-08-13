@@ -55,10 +55,6 @@ const hesapBilgileri = (request, response) => {
                     if (error) throw error
                     else {
                       fs.renameSync(
-                        `${config.local.folders.baseUSer}/${username}`,
-                        `${config.local.folders.baseUSer}/${kullaniciAdi}`
-                      )
-                      fs.renameSync(
                         `${config.local.folders.uploadFolder}/${username}`,
                         `${config.local.folders.uploadFolder}/${kullaniciAdi}`
                       )
@@ -77,10 +73,6 @@ const hesapBilgileri = (request, response) => {
                   (error, results) => {
                     if (error) throw error
                     else {
-                      fs.renameSync(
-                        `${config.local.folders.baseUSer}/${username}`,
-                        `${config.local.folders.baseUSer}/${kullaniciAdi}`
-                      )
                       fs.renameSync(
                         `${config.local.folders.uploadFolder}/${username}`,
                         `${config.local.folders.uploadFolder}/${kullaniciAdi}`
