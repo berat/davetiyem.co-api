@@ -80,6 +80,7 @@ var allowCrossDomain = function(req, res, next) {
     next()
   }
 }
+app.options('*', cors())
 app.all('/*/*/*/*', allowCrossDomain)
 app.use(allowCrossDomain)
 
