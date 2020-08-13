@@ -13,6 +13,7 @@ const getGaleri = (request, response) => {
     response.send({
       status: 505
     })
+    return;
   }
 
   pool.query(
