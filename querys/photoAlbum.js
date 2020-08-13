@@ -9,6 +9,12 @@ const jwt = require('jsonwebtoken')
 const getGaleri = (request, response) => {
   const userid = request.params.id
 
+  if (typeof userid !== 'number') {
+    response.send({
+      status: 505
+    })
+  }
+
   pool.query(
     'SELECT * FROM "users" WHERE "userid" = $1',
     [userid],
