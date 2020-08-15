@@ -46,6 +46,7 @@ app.use(allowCrossDomain)
 // Auth işlemleri
 app.get(config.version + 'uyeCek', auth.uyeCek)
 app.get(config.version + 'uyeCek/:id', auth.kullaniciKontrol)
+app.get(config.version + 'confirm/:id', auth.kullaniciKontrolForAdmin)
 
 app.post(config.version + 'mailGonder', mail.gonder)
 
