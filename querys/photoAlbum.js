@@ -7,7 +7,7 @@ const fs = require('fs')
 const jwt = require('jsonwebtoken')
 
 const getGaleri = (request, response) => {
-  const userid = parseInt(request.params.id)
+  const userid = (request.params.id)
 
   pool.query(
     'SELECT * FROM "users" WHERE "userid" = $1',

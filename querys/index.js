@@ -89,7 +89,7 @@ app.post(config.version + 'yorum/:id', yorum.yorumuSil)
 
 app.get('/', (request, response) => {
   response.header('Access-Control-Allow-Origin', '*')
-  response.send('hello world')
+  response.send("don't forget to say hello to us: destek@davetiyem.co")
 })
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
